@@ -1,0 +1,69 @@
+<div class="container py-4">
+  <h4 class="mb-4 fw-bold">📊 Dashboard — Resumen General</h4>
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-md-3">
+      <div class="card border-0 shadow-sm text-center p-3" style="border-top:4px solid #6c63ff!important">
+        <div style="font-size:2rem">📦</div>
+        <h2 class="fw-bold text-primary">{{ total }}</h2>
+        <p class="text-muted mb-0 small">Total Activos</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="card border-0 shadow-sm text-center p-3" style="border-top:4px solid #28a745!important">
+        <div style="font-size:2rem">✅</div>
+        <h2 class="fw-bold text-success">{{ disponibles }}</h2>
+        <p class="text-muted mb-0 small">Disponibles</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="card border-0 shadow-sm text-center p-3" style="border-top:4px solid #ffc107!important">
+        <div style="font-size:2rem">🔗</div>
+        <h2 class="fw-bold text-warning">{{ asignados }}</h2>
+        <p class="text-muted mb-0 small">Asignados</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="card border-0 shadow-sm text-center p-3" style="border-top:4px solid #17a2b8!important">
+        <div style="font-size:2rem">👥</div>
+        <h2 class="fw-bold text-info">{{ numEmpleados }}</h2>
+        <p class="text-muted mb-0 small">Empleados</p>
+      </div>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h6 class="fw-bold mb-3">📈 Estado de Activos</h6>
+        <div *ngIf="total > 0">
+          <p class="mb-1 small text-muted">Asignados ({{ pct(asignados) }})</p>
+          <div class="progress mb-3" style="height:18px"><div class="progress-bar bg-warning fw-bold" [style.width]="pct(asignados)">{{ pct(asignados) }}</div></div>
+          <p class="mb-1 small text-muted">Disponibles ({{ pct(disponibles) }})</p>
+          <div class="progress" style="height:18px"><div class="progress-bar bg-success fw-bold" [style.width]="pct(disponibles)">{{ pct(disponibles) }}</div></div>
+        </div>
+        <p *ngIf="total===0" class="text-muted small">Sin activos registrados.</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h6 class="fw-bold mb-3">🏷️ Por Categoría</h6>
+        <div *ngFor="let c of porCategoria" class="mb-2">
+          <div class="d-flex justify-content-between small mb-1"><span>{{ c.nombre }}</span><strong>{{ c.cantidad }}</strong></div>
+          <div class="progress" style="height:12px"><div class="progress-bar bg-primary" [style.width]="((c.cantidad/total)*100)+'%'"></div></div>
+        </div>
+        <p *ngIf="porCategoria.length===0" class="text-muted small">Sin datos de categorías.</p>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card border-0 shadow-sm p-4">
+        <h6 class="fw-bold mb-3">🚀 Accesos Rápidos</h6>
+        <div class="d-flex flex-wrap gap-2">
+          <a routerLink="/activos/agregar"   class="btn btn-sm btn-outline-primary">➕ Registrar Activo</a>
+          <a routerLink="/empleados/agregar" class="btn btn-sm btn-outline-success">➕ Agregar Empleado</a>
+          <a routerLink="/asignacion"        class="btn btn-sm btn-outline-warning">🔗 Asignar Activo</a>
+          <a routerLink="/historial"         class="btn btn-sm btn-outline-info">📋 Historial</a>
+          <a routerLink="/reportes"          class="btn btn-sm btn-outline-secondary">📄 Reportes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

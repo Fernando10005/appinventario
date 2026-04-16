@@ -1,0 +1,38 @@
+<div class="container py-4" style="max-width:600px">
+  <h4 class="fw-bold mb-4">➕ Agregar Empleado</h4>
+  <div *ngIf="error" class="alert alert-danger py-2 small">{{ error }}</div>
+  <div class="card shadow-sm border-0 p-4">
+    <form (ngSubmit)="onSubmit()">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Nombre *</label>
+          <input type="text" class="form-control" [(ngModel)]="empleado.nombre" name="nombre" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Apellido *</label>
+          <input type="text" class="form-control" [(ngModel)]="empleado.apellido" name="apellido" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-semibold">Email *</label>
+          <input type="email" class="form-control" [(ngModel)]="empleado.email" name="email" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Departamento *</label>
+          <select class="form-select" [(ngModel)]="empleado.departamento" name="departamento" required>
+            <option value="">Seleccionar...</option>
+            <option>IT</option><option>RRHH</option><option>Ventas</option>
+            <option>Finanzas</option><option>Marketing</option><option>Operaciones</option><option>Legal</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Puesto *</label>
+          <input type="text" class="form-control" [(ngModel)]="empleado.puesto" name="puesto" required>
+        </div>
+      </div>
+      <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Guardar</button>
+        <a routerLink="/empleados" class="btn btn-outline-secondary">← Regresar</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="container py-4">
+  <h4 class="fw-bold mb-4">⚙️ Panel de Administrador</h4>
+
+  <!-- LISTA DE USUARIOS -->
+  <ng-container *ngIf="vista === 'usuarios'">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="mb-0">👥 Usuarios del sistema</h5>
+      <div class="d-flex gap-2">
+        <button class="btn btn-sm btn-outline-secondary" (click)="abrirPassword()">🔑 Cambiar mi contraseña</button>
+        <button class="btn btn-sm btn-primary" (click)="abrirNuevo()">➕ Nuevo Usuario</button>
+      </div>
+    </div>
+    <div class="card shadow-sm border-0">
+      <table class="table table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>Usuario</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of usuarios">
+            <td><code>{{ u.usuario }}</code></td>
+            <td>{{ u.nombre }}</td>
+            <td>
+              <span class="badge" [ngClass]="u.rol === 'admin' ? 'bg-danger' : 'bg-secondary'">
+                {{ u.rol === 'admin' ? '🔴 Admin' : '🔵 User' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="abrirEditar(u)">✏️ Editar</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="eliminar(u.usuario)"
+                [disabled]="u.usuario === 'admin'">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Descripción de roles -->
+    <div class="row mt-4 g-3">
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <h6 class="fw-bold text-danger">🔴 Rol: Admin</h6>
+          <ul class="small text-muted mb-0">
+            <li>Acceso completo al sistema</li>
+            <li>Crear, editar y eliminar registros</li>
+            <li>Gestionar usuarios</li>
+            <li>Ver reportes y estadísticas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <h6 class="fw-bold text-secondary">🔵 Rol: User</h6>
+          <ul class="small text-muted mb-0">
+            <li>Solo lectura en empleados, activos y productos</li>
+            <li>Ver historial y reportes</li>
+            <li>No puede agregar, editar ni eliminar</li>
+            <li>No accede al Panel de Administrador</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- FORMULARIO NUEVO / EDITAR -->
+  <ng-container *ngIf="vista === 'nuevo' || vista === 'editar'">
+    <div class="card shadow-sm border-0 p-4" style="max-width:500px">
+      <h5 class="fw-bold mb-4">{{ vista === 'nuevo' ? '➕ Nuevo Usuario' : '✏️ Editar Usuario' }}</h5>
+      <div *ngIf="errorForm" class="alert alert-danger py-2 small">{{ errorForm }}</div>
+      <div *ngIf="okForm" class="alert alert-success py-2 small">{{ okForm }}</div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Usuario</label>
+        <input class="form-control" [(ngModel)]="form.usuario" [disabled]="vista === 'editar'" placeholder="nombre_usuario">
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nombre completo</label>
+        <input class="form-control" [(ngModel)]="form.nombre" placeholder="Ej: Juan Pérez">
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">
+          {{ vista === 'nuevo' ? 'Contraseña' : 'Nueva contraseña (dejar vacío para no cambiar)' }}
+        </label>
+        <input type="password" class="form-control" [(ngModel)]="form.password" placeholder="••••••••">
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Rol</label>
+        <select class="form-select" [(ngModel)]="form.rol">
+          <option value="admin">🔴 Admin — acceso completo</option>
+          <option value="user">🔵 User — solo lectura</option>
+        </select>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" (click)="vista === 'nuevo' ? guardarNuevo() : guardarEditar()">
+          💾 {{ vista === 'nuevo' ? 'Crear Usuario' : 'Guardar Cambios' }}
+        </button>
+        <button class="btn btn-outline-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- CAMBIO DE CONTRASEÑA -->
+  <ng-container *ngIf="vista === 'password'">
+    <div class="card shadow-sm border-0 p-4" style="max-width:450px">
+      <h5 class="fw-bold mb-4">🔑 Cambiar mi contraseña</h5>
+      <div *ngIf="errorPw" class="alert alert-danger py-2 small">{{ errorPw }}</div>
+      <div *ngIf="okPw" class="alert alert-success py-2 small">{{ okPw }}</div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Contraseña actual</label>
+        <input type="password" class="form-control" [(ngModel)]="pwActual" placeholder="••••••••">
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nueva contraseña</label>
+        <input type="password" class="form-control" [(ngModel)]="pwNueva" placeholder="••••••••">
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Confirmar nueva contraseña</label>
+        <input type="password" class="form-control" [(ngModel)]="pwConfirm" placeholder="••••••••">
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" (click)="guardarPassword()">💾 Cambiar Contraseña</button>
+        <button class="btn btn-outline-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+  </ng-container>
+</div>

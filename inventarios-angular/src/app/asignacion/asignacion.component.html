@@ -1,0 +1,69 @@
+<div class="container py-4">
+  <h4 class="fw-bold mb-4">🔗 Asignación de Activos</h4>
+
+  <div *ngIf="mensaje" class="alert alert-success py-2 small">✅ {{ mensaje }}</div>
+  <div *ngIf="error"   class="alert alert-danger  py-2 small">❌ {{ error }}</div>
+
+  <!-- Formulario de Asignación -->
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-primary text-white fw-semibold">Asignar Activo a Empleado</div>
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label class="form-label fw-semibold">Activo Disponible *</label>
+          <select class="form-select" [(ngModel)]="idActivoSeleccionado">
+            <option [ngValue]="null">Seleccionar activo...</option>
+            <option *ngFor="let a of activosDisponibles" [ngValue]="a.idActivo">
+              {{ a.nombre }} — <code>{{ a.numeroSerie }}</code>
+            </option>
+          </select>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label fw-semibold">Empleado *</label>
+          <select class="form-select" [(ngModel)]="idEmpleadoSeleccionado">
+            <option [ngValue]="null">Seleccionar empleado...</option>
+            <option *ngFor="let e of empleados" [ngValue]="e.idEmpleado">
+              {{ e.nombre }} {{ e.apellido }} — {{ e.departamento }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary w-100" (click)="asignar()">🔗 Asignar</button>
+        </div>
+      </div>
+      <p *ngIf="activosDisponibles.length===0" class="text-muted small mt-2 mb-0">No hay activos disponibles para asignar.</p>
+    </div>
+  </div>
+
+  <!-- Activos Actualmente Asignados -->
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-warning text-dark fw-semibold">Activos Actualmente Asignados</div>
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Activo</th><th>Nº Serie</th><th>Categoría</th><th>Empleado Asignado</th><th class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of activosAsignados">
+            <td class="fw-semibold">{{ a.nombre }}</td>
+            <td><code>{{ a.numeroSerie }}</code></td>
+            <td><span class="badge bg-info text-dark">{{ a.categoria }}</span></td>
+            <td>
+              <span *ngIf="a.empleado">{{ a.empleado.nombre }} {{ a.empleado.apellido }}<br>
+                <small class="text-muted">{{ a.empleado.departamento }} — {{ a.empleado.puesto }}</small>
+              </span>
+            </td>
+            <td class="text-center">
+              <button (click)="devolver(a.idActivo)" class="btn btn-secondary btn-sm">↩️ Devolver</button>
+            </td>
+          </tr>
+          <tr *ngIf="activosAsignados.length===0">
+            <td colspan="5" class="text-center text-muted py-4">No hay activos asignados actualmente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

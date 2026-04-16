@@ -1,0 +1,41 @@
+<div class="container py-4">
+  <h4 class="fw-bold mb-4">📋 Historial de Asignaciones</h4>
+  <div *ngIf="cargando" class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+  <div *ngIf="!cargando" class="card shadow-sm border-0">
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Activo</th>
+            <th>Nº Serie</th>
+            <th>Empleado</th>
+            <th>Departamento</th>
+            <th>Fecha Asignación</th>
+            <th>Fecha Devolución</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of historial">
+            <td>{{ h.idHistorial }}</td>
+            <td class="fw-semibold">{{ h.activo?.nombre }}</td>
+            <td><code>{{ h.activo?.numeroSerie }}</code></td>
+            <td>{{ h.empleado?.nombre }} {{ h.empleado?.apellido }}</td>
+            <td><span class="badge bg-secondary">{{ h.empleado?.departamento }}</span></td>
+            <td>{{ h.fechaAsignacion }}</td>
+            <td>{{ h.fechaDevolucion || '—' }}</td>
+            <td>
+              <span class="badge" [ngClass]="h.fechaDevolucion ? 'bg-success' : 'bg-warning text-dark'">
+                {{ h.fechaDevolucion ? 'Devuelto' : 'En uso' }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="historial.length===0">
+            <td colspan="8" class="text-center text-muted py-4">No hay registros en el historial</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

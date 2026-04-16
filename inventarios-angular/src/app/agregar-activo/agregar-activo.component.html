@@ -1,0 +1,35 @@
+<div class="container py-4" style="max-width:600px">
+  <h4 class="fw-bold mb-4">➕ Registrar Activo</h4>
+  <div *ngIf="error" class="alert alert-danger py-2 small">{{ error }}</div>
+  <div class="card shadow-sm border-0 p-4">
+    <form (ngSubmit)="onSubmit()">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label fw-semibold">Nombre del Activo *</label>
+          <input type="text" class="form-control" [(ngModel)]="activo.nombre" name="nombre" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label fw-semibold">Descripción</label>
+          <textarea class="form-control" [(ngModel)]="activo.descripcion" name="descripcion" rows="2"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Número de Serie *</label>
+          <input type="text" class="form-control" [(ngModel)]="activo.numeroSerie" name="numeroSerie" required placeholder="SN-001-XXX">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Categoría *</label>
+          <select class="form-select" [(ngModel)]="activo.categoria" name="categoria" required>
+            <option value="">Seleccionar...</option>
+            <option>Computadora</option><option>Laptop</option><option>Celular</option>
+            <option>Tablet</option><option>Monitor</option><option>Periférico</option>
+            <option>Impresora</option><option>Servidor</option><option>Red</option><option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Registrar</button>
+        <a routerLink="/activos" class="btn btn-outline-secondary">← Regresar</a>
+      </div>
+    </form>
+  </div>
+</div>

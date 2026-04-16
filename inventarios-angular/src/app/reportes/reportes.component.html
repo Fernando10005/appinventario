@@ -1,0 +1,91 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold mb-0">📄 Reportes</h4>
+    <button class="btn btn-outline-secondary btn-sm" (click)="imprimirTabla()">🖨️ Imprimir</button>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="tabActiva==='lista'" (click)="tabActiva='lista'">
+        📦 Lista de Activos
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" [class.active]="tabActiva==='empleado'" (click)="tabActiva='empleado'">
+        👥 Activos por Empleado
+      </button>
+    </li>
+  </ul>
+
+  <!-- Reporte: Lista de Activos -->
+  <div *ngIf="tabActiva==='lista'">
+    <div class="card shadow-sm border-0">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Lista Completa de Activos</span>
+        <span class="badge bg-primary">Total: {{ todosActivos.length }}</span>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-striped align-middle mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th><th>Nombre</th><th>Nº Serie</th><th>Categoría</th>
+              <th>Estado</th><th>Empleado Asignado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of todosActivos">
+              <td>{{ a.idActivo }}</td>
+              <td class="fw-semibold">{{ a.nombre }}</td>
+              <td><code>{{ a.numeroSerie }}</code></td>
+              <td><span class="badge bg-info text-dark">{{ a.categoria }}</span></td>
+              <td>
+                <span class="badge" [ngClass]="a.estado==='disponible' ? 'bg-success' : 'bg-warning text-dark'">
+                  {{ a.estado }}
+                </span>
+              </td>
+              <td>{{ a.empleado ? (a.empleado.nombre + ' ' + a.empleado.apellido) : '—' }}</td>
+            </tr>
+            <tr *ngIf="todosActivos.length===0">
+              <td colspan="6" class="text-center text-muted py-4">Sin activos registrados</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Resumen al pie -->
+      <div class="card-footer bg-light d-flex gap-4 small text-muted">
+        <span>✅ Disponibles: <strong>{{ todosActivos | filterEstado:'disponible' }}</strong></span>
+        <span>🔗 Asignados: <strong>{{ todosActivos | filterEstado:'asignado' }}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reporte: Por Empleado -->
+  <div *ngIf="tabActiva==='empleado'">
+    <div *ngIf="activosPorEmpleado.length===0" class="alert alert-info small">
+      No hay activos asignados a ningún empleado actualmente.
+    </div>
+    <div *ngFor="let r of activosPorEmpleado" class="card shadow-sm border-0 mb-3">
+      <div class="card-header bg-primary text-white">
+        <strong>👤 {{ r.empleado.nombre }} {{ r.empleado.apellido }}</strong>
+        <span class="ms-2 badge bg-light text-dark">{{ r.empleado.departamento }}</span>
+        <span class="ms-2 badge bg-warning text-dark">{{ r.activos.length }} activo(s)</span>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-sm align-middle mb-0">
+          <thead class="table-light">
+            <tr><th>Nombre</th><th>Nº Serie</th><th>Categoría</th><th>Estado</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of r.activos">
+              <td class="fw-semibold">{{ a.nombre }}</td>
+              <td><code>{{ a.numeroSerie }}</code></td>
+              <td>{{ a.categoria }}</td>
+              <td><span class="badge bg-warning text-dark">{{ a.estado }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
