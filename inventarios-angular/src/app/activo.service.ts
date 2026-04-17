@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Activo } from './activo';
 import { HistorialAsignacion } from './historial-asignacion';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ActivoService {
-  private base = 'http://localhost:8081/inventario-app/activos';
-  private histBase = 'http://localhost:8081/inventario-app/historial';
+  private base = `${environment.apiUrl}/activos`;
+  private histBase = `${environment.apiUrl}/historial`;
 
   constructor(private http: HttpClient) {}
 
