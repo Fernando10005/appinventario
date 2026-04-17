@@ -1,1 +1,0 @@
-{\n  "version": 2,\n  "builds": [\n    {\n      "src": "inventarios-angular/package.json",\n      "use": "@vercel/angular"\n    }\n  ],\n  "routes": [\n    {\n      "src": ".*",\n      "dest": "inventarios-angular/dist/inventarios-angular/index.html"\n    }\n  ]\n}
