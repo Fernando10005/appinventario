@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Empleado } from './empleado';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class EmpleadoService {
-  private base = 'http://localhost:8081/inventario-app/empleados';
+  private base = `${environment.apiUrl}/empleados`;
 
   constructor(private http: HttpClient) {}
 
