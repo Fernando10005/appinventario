@@ -15,7 +15,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("inventario-app") //http://localhost:8080/inventario-app/
-@CrossOrigin(value = "http://localhost:4200")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://intelligent-empathy-production.up.railway.app"
+})
 public class ProductoControlador {
 
     //Para enviar informacion a consola
