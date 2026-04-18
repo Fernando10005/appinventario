@@ -27,8 +27,11 @@ RUN npm install -g serve
 # Copy built app from builder
 COPY --from=builder /app/dist/inventarios-angular /app/dist/inventarios-angular
 
+# Set working directory to the built app
+WORKDIR /app/dist/inventarios-angular
+
 # Expose port
 EXPOSE 3000
 
 # Start the app
-CMD ["serve", "-s", "/app/dist/inventarios-angular", "-l", "3000"]
+CMD ["serve", "-s", ".", "-l", "3000"]
