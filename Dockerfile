@@ -19,13 +19,13 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy built app from builder
-COPY --from=builder /app/dist/inventarios-angular /usr/share/nginx/html
+COPY --from=builder /app/dist/inventarios-angular/browser /usr/share/nginx/html
 
 # Copy Nginx configuration
 COPY inventarios-angular/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
-EXPOSE 3000
+EXPOSE 80
 
 
 # Start Nginx
