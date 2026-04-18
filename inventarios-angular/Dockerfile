@@ -31,4 +31,5 @@ COPY --from=builder /app/dist/inventarios-angular /app/dist/inventarios-angular
 EXPOSE 3000
 
 # Start the app
-CMD ["serve", "-s", "dist/inventarios-angular", "-l", "3000"]
+CMD ["serve", "-s", "/app/dist/inventarios-angular", "-l", "3000"]
+L
