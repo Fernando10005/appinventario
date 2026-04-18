@@ -1,3 +1,4 @@
+
 # Build stage
 FROM node:18-alpine AS builder
 
@@ -24,10 +25,10 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copy built app from builder
-COPY --from=builder /app/dist/inventarios-angular ./dist
+COPY --from=builder /app/dist/inventarios-angular /app/dist/inventarios-angular
 
 # Expose port
 EXPOSE 3000
 
 # Start the app
-CMD ["serve", "-s", "dist", "-l", "3000"]
+CMD ["serve", "-s", "dist/inventarios-angular", "-l", "3000"]
