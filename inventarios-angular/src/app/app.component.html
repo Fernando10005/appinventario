@@ -1,0 +1,61 @@
+<ng-container *ngIf="auth.isLoggedIn()">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background:linear-gradient(90deg,#6c63ff,#3f3d56)">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" routerLink="/dashboard">📦 Inventarios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">🏠 Inicio</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">👥 Empleados</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/empleados">Ver Lista</a></li>
+              <li><a class="dropdown-item" routerLink="/empleados/agregar">+ Agregar Empleado</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">📦 Activos</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/activos">Ver Lista</a></li>
+              <li><a class="dropdown-item" routerLink="/activos/agregar">+ Registrar Activo</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/asignacion" routerLinkActive="active">🔗 Asignación</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/historial" routerLinkActive="active">📋 Historial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reportes" routerLinkActive="active">📄 Reportes</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">🛒 Productos</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/productos">Ver Lista</a></li>
+              <li><a class="dropdown-item" routerLink="/agregar-producto">+ Agregar Producto</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              👤 {{ usuario }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><button class="dropdown-item text-danger" (click)="logout()">🚪 Cerrar Sesión</button></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</ng-container>
+
+<div [class]="auth.isLoggedIn() ? 'container-fluid px-0' : ''">
+  <router-outlet></router-outlet>
+</div>

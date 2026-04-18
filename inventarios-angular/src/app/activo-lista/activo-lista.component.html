@@ -1,0 +1,63 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold mb-0">Activos</h4>
+    <a routerLink="/activos/agregar" class="btn btn-success btn-sm">+ Registrar Activo</a>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-3 p-3">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-5">
+        <label class="form-label small mb-1">Buscar por Nº de Serie</label>
+        <input type="text" class="form-control form-control-sm" placeholder="Número de serie..." [(ngModel)]="filtroBusqueda">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small mb-1">Filtrar por Estado</label>
+        <select class="form-select form-select-sm" [(ngModel)]="filtroEstado">
+          <option value="">Todos</option>
+          <option value="disponible">Disponible</option>
+          <option value="asignado">Asignado</option>
+        </select>
+      </div>
+      <div class="col-md-auto">
+        <button class="btn btn-primary btn-sm me-1" (click)="cargar()">Buscar</button>
+        <button class="btn btn-outline-secondary btn-sm" (click)="limpiarFiltros()">✕ Limpiar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th><th>Nombre</th><th>Nº Serie</th><th>Categoría</th>
+            <th>Estado</th><th>Empleado Asignado</th><th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of activos">
+            <td>{{ a.idActivo }}</td>
+            <td class="fw-semibold">{{ a.nombre }}</td>
+            <td><code>{{ a.numeroSerie }}</code></td>
+            <td><span class="badge bg-info text-dark">{{ a.categoria }}</span></td>
+            <td>
+              <span class="badge" [ngClass]="a.estado==='disponible' ? 'bg-success' : 'bg-warning text-dark'">
+                {{ a.estado }}
+              </span>
+            </td>
+            <td>{{ a.empleado ? (a.empleado.nombre + ' ' + a.empleado.apellido) : '—' }}</td>
+            <td class="text-center">
+              <button (click)="editar(a.idActivo)" class="btn btn-warning btn-sm me-1">Editar</button>
+              <button (click)="eliminar(a.idActivo)" class="btn btn-danger btn-sm me-1">Eliminar</button>
+              <button *ngIf="a.estado==='asignado'" (click)="devolver(a.idActivo)" class="btn btn-secondary btn-sm">Devolver</button>
+            </td>
+          </tr>
+          <tr *ngIf="activos.length===0">
+            <td colspan="7" class="text-center text-muted py-4">No se encontraron activos</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
