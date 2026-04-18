@@ -9,10 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("inventario-app")
-@CrossOrigin(origins = {
-    "http://localhost:4200",
-    "https://intelligent-empathy-production.up.railway.app"
-})
+@CrossOrigin(origins = {"http://localhost:4200", "https://intelligent-empathy-production.up.railway.app"})
 public class HistorialControlador {
 
     @Autowired
