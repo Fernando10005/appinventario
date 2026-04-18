@@ -1,1 +1,0 @@
-{\n  "version": "1.0",\n  "services": {\n    "app": {\n      "build": {\n        "context": ".",\n        "dockerfile": "inventarios-angular/Dockerfile"\n      },\n      "image": "myapp:latest"\n    }\n  }\n}
