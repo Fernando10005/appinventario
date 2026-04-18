@@ -32,4 +32,3 @@ EXPOSE 3000
 
 # Start the app
 CMD ["serve", "-s", "/app/dist/inventarios-angular", "-l", "3000"]
-L
