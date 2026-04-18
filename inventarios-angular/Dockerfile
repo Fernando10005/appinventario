@@ -17,21 +17,16 @@ COPY . .
 RUN npm run build
 
 # Serve stage
-FROM node:18-alpine
-
-WORKDIR /app
-
-# Install serve to run the static app
-RUN npm install -g serve
+FROM nginx:alpine
 
 # Copy built app from builder
-COPY --from=builder /app/dist/inventarios-angular /app/dist/inventarios-angular
+COPY --from=builder /app/dist/inventarios-angular /usr/share/nginx/html
 
-# Set working directory to the built app
-WORKDIR /app/dist/inventarios-angular
+# Configure Nginx for SPA routing
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 3000
 
-# Start the app
-CMD ["serve", "-s", ".", "-l", "3000"]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
